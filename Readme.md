@@ -2,15 +2,25 @@
 # [System Design Interview - An Insider's Guide (Vol 1)](https://bytebytego.com/courses/system-design-interview)
 These notes are based on the System Design Interview books - [Vol 1 2nd Ed](https://www.goodreads.com/book/show/54109255-system-design-interview-an-insider-s-guide) 
 
+This repository is a structured collection of:
+- system design interview notes
+- distributed systems concepts and trade-offs
+- chapter-wise architecture case studies
+- a Java 8 to 26 feature tracker
 
-**Note:** These notes are a work in progress. 
+It is useful for:
+- interview preparation
+- backend and distributed systems revision
+- quick refreshers before system design rounds
+- Java language and platform evolution review
 
-This repository is a chapter-wise collection of system design notes covering:
-- system design fundamentals
-- back-of-the-envelope estimation
-- distributed systems patterns
-- real-world case studies such as YouTube, Google Drive, chat systems, and search autocomplete
-- a Java 8 to 26 feature tracker for language and platform revision
+**Note:** These notes are a work in progress.
+
+## What Is Inside
+- Foundational topics such as scaling, estimation, and design frameworks
+- Distributed systems building blocks such as rate limiting, consistent hashing, and key-value stores
+- End-to-end design problems such as chat systems, web crawlers, notification systems, YouTube, and Google Drive
+- A release-by-release Java tracker from Java 8 through JDK 26
 
 
  * [Chapter 1 - Scale From Zero To Millions Of Users](./01.%20Scaling/)
@@ -32,13 +42,20 @@ This repository is a chapter-wise collection of system design notes covering:
  * [Chapter 17 - Java 8 To 26 Feature Tracker](./17.%20Java%208%20To%2026%20Feature%20Tracker/)
 
 
-
+## Suggested GitHub Subtitle
+`System design interview notes, distributed systems concepts, architecture case studies, and Java 8 to 26 feature tracking.`
 
 ## Suggested GitHub Description
 `Structured system design interview notes with distributed systems fundamentals, architecture case studies, and a Java 8 to 26 feature tracker.`
 
 ## Suggested GitHub Topics
 `system-design`, `distributed-systems`, `scalability`, `interview-prep`, `backend`, `java`, `software-architecture`, `notes`
+
+## Suggested Reading Order
+1. Start with Scaling, Estimation, and the System Design Framework
+2. Move to core infrastructure topics such as Rate Limiter, Consistent Hashing, and Key-Value Store
+3. Study end-to-end design case studies such as URL Shortener, Chat System, YouTube, and Google Drive
+4. Use the Java tracker as a separate language and platform revision guide
 
 
 # Additonal Resources
