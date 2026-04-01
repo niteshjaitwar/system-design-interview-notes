@@ -5,6 +5,13 @@ These notes are based on the System Design Interview books - [Vol 1 2nd Ed](http
 
 **Note:** These notes are a work in progress. 
 
+This repository is a chapter-wise collection of system design notes covering:
+- system design fundamentals
+- back-of-the-envelope estimation
+- distributed systems patterns
+- real-world case studies such as YouTube, Google Drive, chat systems, and search autocomplete
+- a Java 8 to 26 feature tracker for language and platform revision
+
 
  * [Chapter 1 - Scale From Zero To Millions Of Users](./01.%20Scaling/)
  * [Chapter 2 - Back-of-the-envelope Estimation](./02.%20Back%20Of%20the%20Envelope%20Estimation/)
@@ -25,6 +32,13 @@ These notes are based on the System Design Interview books - [Vol 1 2nd Ed](http
  * [Chapter 17 - Java 8 To 26 Feature Tracker](./17.%20Java%208%20To%2026%20Feature%20Tracker/)
 
 
+
+
+## Suggested GitHub Description
+`Structured system design interview notes with distributed systems fundamentals, architecture case studies, and a Java 8 to 26 feature tracker.`
+
+## Suggested GitHub Topics
+`system-design`, `distributed-systems`, `scalability`, `interview-prep`, `backend`, `java`, `software-architecture`, `notes`
 
 
 # Additonal Resources

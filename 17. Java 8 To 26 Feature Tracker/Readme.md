@@ -480,17 +480,94 @@ This chapter is a release-by-release reference for Java from **Java 8** through 
 ## How to Use This Chapter
 - Use **Java 11, 17, 21, and 25** as the main LTS milestones.
 - Use the preview/incubator trail to track how features evolved before becoming standard.
-- If you are preparing for interviews, focus first on:
-  - Java 8
-  - Java 11
-  - Java 17
-  - Java 21
-  - Java 25
-- If you are upgrading production systems, check:
-  - Removed APIs and tools
-  - Garbage collector defaults and changes
-  - Preview features that are not enabled by default
-  - Security and encapsulation changes
+
+---
+
+## Interview-Focused Checklist
+If you are preparing for interviews, focus first on these releases:
+
+- **Java 8:** lambdas, streams, default methods, `Optional`, `CompletableFuture`, `java.time`
+- **Java 11:** standard HTTP client, single-file source launch, Flight Recorder, ZGC introduction
+- **Java 17:** records, sealed classes, pattern matching for `instanceof`, stronger encapsulation
+- **Java 21:** virtual threads, sequenced collections, record patterns, pattern matching for `switch`
+- **Java 25:** scoped values, compact source files, module import declarations, structured concurrency progress
+
+High-value interview themes:
+- language evolution from OOP-heavy Java to more expressive and concise Java
+- concurrency evolution from thread pools toward virtual threads and structured concurrency
+- API modernization such as HTTP client, `java.time`, streams, and FFM
+- deprecations and removals such as applets, Nashorn, CMS, Security Manager, and legacy 32-bit support
+
+---
+
+## Upgrade-Focused Notes
+If you are upgrading production systems, check these areas in each target jump:
+
+- Removed modules, APIs, or tools
+- JDK internal access restrictions
+- Garbage collector defaults and behavior changes
+- Encoding, crypto, TLS, and security defaults
+- Preview or incubator APIs that are not available without flags
+- Build, packaging, and runtime-image changes
+
+Common upgrade breakpoints:
+- **8 to 11:** modules era begins, Java EE/CORBA removed, new HTTP client becomes available
+- **11 to 17:** strong encapsulation gets stricter, Security Manager deprecation, records/sealed classes become mainstream
+- **17 to 21:** virtual threads become standard, pattern matching matures, structured concurrency is still preview-stage
+- **21 to 25:** more Loom/Leyden-related evolution, class-file and startup improvements, more removals finalized
+
+---
+
+## Minimal Code Examples
+
+### Java 8: Lambda and Stream
+```java
+List<String> names = Arrays.asList("ana", "raj", "zoe");
+List<String> result = names.stream()
+    .filter(name -> name.length() == 3)
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+```
+
+### Java 11: HTTP Client
+```java
+HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://example.com"))
+    .build();
+
+HttpResponse<String> response =
+    client.send(request, HttpResponse.BodyHandlers.ofString());
+```
+
+### Java 17: Record
+```java
+public record User(long id, String name) {}
+```
+
+### Java 21: Virtual Threads
+```java
+try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    Future<String> future = executor.submit(() -> "done");
+    System.out.println(future.get());
+}
+```
+
+### Java 22+: Stream Gatherers
+```java
+var windows = Stream.of(1, 2, 3, 4, 5)
+    .gather(Gatherers.windowFixed(2))
+    .toList();
+```
+
+---
+
+## Recommended Learning Path
+- Start with **Java 8** for functional style and modern core APIs
+- Move to **Java 11** for post-Java-8 platform changes
+- Study **Java 17** as a stable modern baseline
+- Learn **Java 21** for Loom-era concurrency and pattern matching
+- Review **Java 25 and 26** to stay current on active platform direction
 
 ---
 
