@@ -228,3 +228,71 @@ downloads blocks to construct the file.
 4. **Cloud Storage Failure:** Use cross-region replication to fetch unavailable files.
 5. **Notification Service Failure:** Clients reconnect to alternative servers.
 
+---
+
+## Beginner Notes
+### Core Problem
+Cloud drive systems must store files durably and keep many devices synchronized.
+
+### Main Data Types
+- file blob data
+- metadata
+- version history
+- sharing permissions
+- change events
+
+## Advanced Design Questions
+- How do you resolve concurrent edits?
+- Do you use simpler file-version conflict copies or collaborative editing algorithms?
+- How do you support delta sync efficiently?
+- How do you handle millions of tiny files and very large files together?
+
+## Common Mistakes
+- Designing only storage and forgetting sync protocol.
+- Mixing metadata and blob storage into one data model.
+- Ignoring conflict resolution semantics for shared files.
+
+---
+
+## Interview Questions
+1. Why should metadata and blob storage be separated?
+2. How does delta sync reduce bandwidth?
+3. How do you detect and resolve edit conflicts?
+4. What should happen if a client is offline for several days?
+5. How do you keep notifications, metadata, and storage changes consistent?
+
+## Chapter Glossary
+- **Blob**: binary large object such as a file chunk or whole file.
+- **Delta sync**: sending only the changed portion instead of the entire file.
+- **Namespace**: logical grouping of files owned or shared with a user.
+- **Version history**: past stored versions of a file.
+
+---
+
+## Example Walkthrough
+### Example: File Update on One Device
+1. User edits a file on laptop.
+2. Client computes changed blocks or changed version metadata.
+3. Updated chunks are uploaded to storage.
+4. Metadata database records the new version.
+5. Notification or sync service informs other devices.
+6. Other devices download only the delta or latest changed chunks.
+
+## Exercises
+1. Why should blobs and metadata be stored separately?
+2. What is the benefit of delta sync?
+3. What should the system do if two devices edit the same file offline?
+
+---
+
+## One-Minute Revision
+- separate metadata from blob storage
+- sync protocol matters as much as storage
+- delta sync saves bandwidth
+- versioning and conflict handling are mandatory
+- notifications keep devices up to date
+
+## Exercise Answers
+1. Metadata needs indexed queries and transactional updates, while blobs need cheap durable large-object storage.
+2. Delta sync sends only changed parts, reducing bandwidth and speeding up synchronization.
+3. The system should detect the conflict and merge safely if possible or create conflict copies / versions if not.

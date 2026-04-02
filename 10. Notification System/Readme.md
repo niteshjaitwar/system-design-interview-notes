@@ -140,3 +140,74 @@ If seen before discard it, otherwise send out the notification.
 3. **Caching:** Reduce latency by caching frequently accessed data.
 4. **Distributed Crawling:** Optimize message delivery geographically for better performance.
 
+---
+
+## Beginner Notes
+### What a Notification System Usually Includes
+- email
+- SMS
+- push notification
+- in-app notification
+
+### Why This System Needs Decoupling
+Notification sending is usually asynchronous because delivery depends on:
+- external providers
+- retries
+- templates
+- user preferences
+
+## Advanced Design Questions
+- How do you deduplicate repeated events?
+- How do you avoid sending duplicate notifications across retries?
+- How do you respect provider rate limits?
+- How do you prioritize critical alerts over promotional messages?
+
+## Common Mistakes
+- Ignoring user preference management.
+- Ignoring delivery receipts and bounce handling.
+- Coupling business logic directly to provider APIs.
+
+---
+
+## Interview Questions
+1. Why should notification delivery usually be asynchronous?
+2. How do you model notification templates and localization?
+3. How do retries avoid duplicate user-visible alerts?
+4. How do you handle provider outages or slowdowns?
+5. What data should be stored for auditing and delivery tracking?
+
+## Chapter Glossary
+- **Provider**: external service used to deliver email, SMS, or push.
+- **Bounce**: email or SMS delivery failure returned by a provider.
+- **DLQ**: dead-letter queue for repeatedly failing events.
+- **Preference center**: user-configurable settings for notification channels and frequency.
+
+---
+
+## Example Walkthrough
+### Example: Sending a Password Reset Email
+1. User requests password reset.
+2. Application emits a notification event.
+3. Event enters a queue.
+4. Worker loads the email template and user contact information.
+5. Worker calls the email provider API.
+6. Delivery status is stored for auditing and retries.
+
+## Exercises
+1. Why should password reset notifications usually be high priority?
+2. Why are queues useful between application logic and providers?
+3. What should happen after repeated provider failures?
+
+---
+
+## One-Minute Revision
+- notifications are usually asynchronous
+- providers can fail or rate-limit
+- queues decouple traffic spikes
+- preferences and retries are first-class concerns
+- auditability matters
+
+## Exercise Answers
+1. Password reset messages are user-blocking and often security-critical, so delay directly hurts the user.
+2. Queues buffer traffic, isolate provider slowness, and make retries easier to manage.
+3. Events should move to retry workflows or a DLQ and trigger alerts or failover to another provider.

@@ -97,3 +97,69 @@ When servers are added or removed:
 - Akamai CDN
 - Maglev Load Balancer
 
+---
+
+## Beginner Notes
+### Why Normal Hashing Fails at Scale
+If you map keys by `hash(key) % N`, adding or removing one server changes `N`, so a huge number of keys move.
+
+### Main Goal of Consistent Hashing
+Move only a small portion of keys when the server set changes.
+
+### Ring Intuition
+Servers and keys are placed on a logical ring. A key belongs to the next server clockwise on the ring.
+
+## Advanced Design Questions
+- How many virtual nodes should each server get?
+- How do you handle machines with different capacities?
+- How do you rebalance while traffic is live?
+- Is data copied lazily or eagerly during movement?
+
+## Common Mistakes
+- Explaining the ring but ignoring virtual nodes.
+- Assuming key distribution is always perfectly even.
+- Forgetting replica placement across failure domains.
+
+---
+
+## Interview Questions
+1. Why is consistent hashing useful in caches and distributed databases?
+2. What problem do virtual nodes solve?
+3. How do you handle heterogeneous servers with different capacities?
+4. What data movement happens when one server is removed?
+5. How is consistent hashing different from simple modulo hashing?
+
+## Chapter Glossary
+- **Hash ring**: logical circular space where keys and servers are placed.
+- **Virtual node**: multiple logical positions assigned to one physical server.
+- **Rebalancing**: moving ownership of keys when topology changes.
+- **Hotspot**: uneven concentration of traffic on a small set of keys or nodes.
+
+---
+
+## Example Walkthrough
+### Example: Adding One New Cache Server
+1. Existing keys are mapped on the hash ring.
+2. A new server is added at one or more positions on the ring.
+3. Only keys that fall between the new server and its predecessor move.
+4. All other keys remain on their original servers.
+
+This is why consistent hashing reduces large-scale remapping.
+
+## Exercises
+1. Why does modulo hashing move far more keys than consistent hashing?
+2. What problem do virtual nodes solve?
+3. Why should replicas live in different failure domains?
+
+---
+
+## One-Minute Revision
+- modulo hashing remaps too many keys when `N` changes
+- consistent hashing moves only a subset of keys
+- virtual nodes smooth distribution
+- replicas should not share the same failure domain
+
+## Exercise Answers
+1. Modulo hashing depends on the total number of servers, so changing `N` changes the destination for most keys.
+2. Virtual nodes reduce uneven distribution and help handle heterogeneous server capacity.
+3. Different failure domains reduce the chance that one rack, zone, or data center failure removes all copies together.

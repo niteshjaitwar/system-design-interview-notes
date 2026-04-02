@@ -202,3 +202,75 @@ as news messages:
 3. **Client-Side Caching:** Reduce data transfer for better performance.
 4. **Improved Load Times:** Use geographically distributed caching networks.
 
+---
+
+## Beginner Notes
+### Core Chat Guarantees
+Most chat systems care about:
+- low latency
+- durable storage
+- message ordering within a conversation
+- sync across devices
+- online presence
+
+### Message Lifecycle
+1. sender creates message
+2. server assigns message ID
+3. message is persisted
+4. receiver is notified or pushed
+5. receiver devices sync and acknowledge
+
+## Advanced Design Questions
+- Is ordering global or only per conversation?
+- How do you support offline users for long periods?
+- How do you migrate live WebSocket connections when a server fails?
+- Which messages trigger push notifications and which do not?
+
+## Common Mistakes
+- Assuming WebSocket alone solves message delivery.
+- Ignoring message deduplication and retries.
+- Ignoring the cost of group fan-out for very large rooms.
+
+---
+
+## Interview Questions
+1. Why is WebSocket usually preferred for chat delivery?
+2. How do you keep message order correct across devices?
+3. How do you store chat history cheaply but retrieve it quickly?
+4. How does presence tracking work at scale?
+5. What changes when group size grows from 100 to 100,000?
+
+## Chapter Glossary
+- **Presence**: whether a user is online, offline, idle, or recently active.
+- **Acknowledgment**: confirmation that a message or event was received.
+- **Inbox sync queue**: per-user or per-device backlog of messages to fetch.
+- **Read receipt**: signal that a user has opened or read a message.
+
+---
+
+## Example Walkthrough
+### Example: Sending a One-to-One Message
+1. User A sends a chat message over WebSocket.
+2. The chat server persists the message and assigns an ID.
+3. If User B is online, the message is pushed to User B's connected chat server.
+4. If User B is offline, the message stays available for later sync and may trigger push notification.
+5. User B's devices fetch or acknowledge the new message using the latest known message ID.
+
+## Exercises
+1. Why is durable storage needed even with WebSocket?
+2. Why is per-conversation ordering easier than global ordering?
+3. What extra problems appear when a user has multiple devices?
+
+---
+
+## One-Minute Revision
+- WebSocket gives low-latency delivery, not durable history
+- messages must be stored and synced
+- presence is separate from message storage
+- ordering is usually per conversation
+- multi-device sync adds complexity
+
+## Exercise Answers
+1. WebSocket is only a transport channel; users still need message history, offline delivery, and recovery after disconnects.
+2. Ordering within one conversation needs only local sequencing, while global ordering requires much more coordination across all chats.
+3. The system must track latest seen message IDs, sync history correctly, and handle duplicate delivery or acknowledgments across devices.

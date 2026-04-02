@@ -3,6 +3,7 @@
 These notes are based on the System Design Interview books - [Vol 1 2nd Ed](https://www.goodreads.com/book/show/54109255-system-design-interview-an-insider-s-guide) 
 
 This repository is a structured collection of:
+- system design foundations from networking basics to distributed systems
 - system design interview notes
 - distributed systems concepts and trade-offs
 - chapter-wise architecture case studies
@@ -17,12 +18,14 @@ It is useful for:
 **Note:** These notes are a work in progress.
 
 ## What Is Inside
+- Foundational networking and system design basics such as DNS, IP, ports, HTTP/HTTPS, TLS, caches, replication, sharding, and queues
 - Foundational topics such as scaling, estimation, and design frameworks
 - Distributed systems building blocks such as rate limiting, consistent hashing, and key-value stores
 - End-to-end design problems such as chat systems, web crawlers, notification systems, YouTube, and Google Drive
 - A release-by-release Java tracker from Java 8 through JDK 26
 
 
+ * [Chapter 0 - Foundations Of System Design](./00.%20Foundations%20of%20System%20Design/)
  * [Chapter 1 - Scale From Zero To Millions Of Users](./01.%20Scaling/)
  * [Chapter 2 - Back-of-the-envelope Estimation](./02.%20Back%20Of%20the%20Envelope%20Estimation/)
  * [Chapter 3 - A Framework For System Design Interviews](./03.%20System%20Design%20Framework/)
@@ -43,19 +46,44 @@ It is useful for:
 
 
 ## Suggested GitHub Subtitle
-`System design interview notes, distributed systems concepts, architecture case studies, and Java 8 to 26 feature tracking.`
+`System design foundations, interview notes, distributed systems concepts, architecture case studies, and Java 8 to 26 feature tracking.`
 
 ## Suggested GitHub Description
-`Structured system design interview notes with distributed systems fundamentals, architecture case studies, and a Java 8 to 26 feature tracker.`
+`Structured system design foundations and interview notes with distributed systems fundamentals, architecture case studies, and a Java 8 to 26 feature tracker.`
 
 ## Suggested GitHub Topics
-`system-design`, `distributed-systems`, `scalability`, `interview-prep`, `backend`, `java`, `software-architecture`, `notes`
+`system-design`, `distributed-systems`, `networking`, `scalability`, `interview-prep`, `backend`, `java`, `software-architecture`, `notes`
 
 ## Suggested Reading Order
-1. Start with Scaling, Estimation, and the System Design Framework
+1. Start with Foundations of System Design, then read Scaling, Estimation, and the System Design Framework
 2. Move to core infrastructure topics such as Rate Limiter, Consistent Hashing, and Key-Value Store
 3. Study end-to-end design case studies such as URL Shortener, Chat System, YouTube, and Google Drive
 4. Use the Java tracker as a separate language and platform revision guide
+
+## Study Roadmap
+### 30-Day Plan
+1. Days 1-5: Read [Chapter 0](./00.%20Foundations%20of%20System%20Design/), [Chapter 1](./01.%20Scaling/), and [Chapter 2](./02.%20Back%20Of%20the%20Envelope%20Estimation/). Focus on networking, request flow, scaling vocabulary, and estimation basics.
+2. Days 6-8: Read [Chapter 3](./03.%20System%20Design%20Framework/). Practice turning vague product ideas into structured interview discussions.
+3. Days 9-15: Study [Chapter 4](./04.%20Rate%20Limiter/), [Chapter 5](./05.%20Consistent%20Hashing/), [Chapter 6](./06.%20Key-Value%20Store/), and [Chapter 7](./07.%20Unique-Id%20Generator/). These are the core infrastructure building blocks.
+4. Days 16-20: Study [Chapter 8](./08.%20URL%20Shortener/), [Chapter 9](./09.%20Web%20Crawler/), [Chapter 10](./10.%20Notification%20System/), and [Chapter 11](./11.%20News%20Feed%20System/). Practice explaining read path, write path, and trade-offs.
+5. Days 21-26: Study [Chapter 12](./12.%20Chat%20System/), [Chapter 13](./13.%20Search%20Autocomplete/), and [Chapter 16](./16.%20Proximity%20Service/). Focus on low latency, indexing, and real-time behavior.
+6. Days 27-30: Study [Chapter 14](./14.%20Youtube/) and [Chapter 15](./15.%20Google%20Drive/). Review all exercises and do timed mock interview answers.
+
+### 60-Day Plan
+1. Weeks 1-2: Build strong fundamentals with Chapters 0-3.
+2. Weeks 3-4: Master infrastructure topics with Chapters 4-7.
+3. Weeks 5-6: Cover medium-complexity product designs with Chapters 8-11.
+4. Weeks 7-8: Cover advanced real-time and storage-heavy designs with Chapters 12-16.
+5. Final days: Revisit weak chapters, redo exercises, and practice whiteboard-style explanations without notes.
+
+### How to Use the Notes
+- Read once for vocabulary and high-level architecture.
+- Read again to identify bottlenecks, trade-offs, and failure modes.
+- Answer the interview questions and end-of-chapter exercises without looking at the notes.
+- Practice explaining one write path and one read path for every design chapter.
+
+## Fast Revision
+- [System Design Interview Handbook](./SYSTEM_DESIGN_INTERVIEW_HANDBOOK.md)
 
 
 # Additonal Resources

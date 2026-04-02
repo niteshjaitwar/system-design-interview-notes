@@ -129,3 +129,67 @@ The cache is divided into five layers:
 ### Monitoring
 1. Track key metrics like QPS (queries per second) and latency.
 2. Monitor cache hit rates and adjust configurations accordingly.
+
+---
+
+## Beginner Notes
+### Two Fundamental Feed Models
+- **Fanout on write**: push a post into followers' feed data early.
+- **Fanout on read**: build the feed when the user opens it.
+
+### Why Feeds Are Hard
+Feeds are simple for normal users but difficult for celebrities because one post may need to reach millions of followers.
+
+## Advanced Design Questions
+- Should the feed be chronological or ranked?
+- How are celebrity accounts handled?
+- How is feed pagination done safely?
+- How do you support deletions and privacy changes?
+
+## Common Mistakes
+- Using only fanout on write or only fanout on read without discussing hybrids.
+- Ignoring ranking and relevance.
+- Ignoring cache invalidation when posts are deleted or hidden.
+
+---
+
+## Interview Questions
+1. When should you use fanout on write versus fanout on read?
+2. How do celebrity users change the architecture?
+3. What are the trade-offs between chronological feeds and ranked feeds?
+4. How do you paginate feeds without duplicates or missing items?
+5. How do you delete content that has already been fanned out widely?
+
+## Chapter Glossary
+- **Feed item**: a post reference shown in a user's feed.
+- **Fanout**: distributing one write to many downstream recipients.
+- **Ranking**: scoring and ordering posts by relevance.
+- **Timeline**: ordered set of content associated with a user.
+
+---
+
+## Example Walkthrough
+### Example: Fanout on Write for a Normal User
+1. User publishes a post.
+2. The post metadata is stored.
+3. The system fetches follower IDs.
+4. The post reference is inserted into each follower's feed storage.
+5. When followers open the app, feed retrieval is fast because the feed is already materialized.
+
+## Exercises
+1. Why is fanout on write bad for celebrity users?
+2. What does a hybrid feed architecture try to combine?
+3. Why is pagination harder than just sorting by time?
+
+---
+
+## One-Minute Revision
+- feed systems are dominated by read scale
+- fanout on write is fast to read
+- fanout on read is cheaper for massive follower counts
+- ranking and pagination are key complexities
+
+## Exercise Answers
+1. A celebrity post may need to be copied to millions of followers, which makes write amplification too high.
+2. A hybrid design combines fast reads for normal users with lazy or selective fanout for celebrity-scale accounts.
+3. Pagination must avoid duplicates, gaps, and unstable ordering while data keeps changing underneath.

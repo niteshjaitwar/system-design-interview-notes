@@ -312,4 +312,76 @@ This method ensures **low-latency, scalable** retrieval of businesses near a use
 2. [Quadtree Indexing](https://en.wikipedia.org/wiki/Quadtree)
 3. [Google S2 Geometry](https://s2geometry.io/)
 
+---
 
+## Beginner Notes
+### What a Proximity Service Does
+Given a user location, it finds nearby entities such as:
+- restaurants
+- drivers
+- stores
+- charging stations
+
+### Why Normal SQL Filtering Is Not Enough
+Distance-based lookups on large datasets become expensive if you scan every row.
+
+That is why proximity systems use geospatial indexing methods such as:
+- grid cells
+- geohash
+- quadtree
+- S2 cells
+
+## Advanced Design Questions
+- How often does location data change?
+- Do results need exact geometric distance or rough candidate filtering first?
+- How do you handle boundary issues near cell edges?
+- How do you rebalance hot city centers with much higher density?
+
+## Common Mistakes
+- Forgetting edge-cell neighbors during lookup.
+- Using very fine precision everywhere and exploding storage or index size.
+- Ignoring freshness when locations update in real time.
+
+---
+
+## Interview Questions
+1. Why is geohash often chosen over a naive full scan?
+2. How do you handle users close to cell boundaries?
+3. When would quadtree be better than a fixed grid?
+4. How do you separate candidate generation from exact ranking by distance?
+5. How do you keep location indexes fresh under frequent movement?
+
+## Chapter Glossary
+- **Geohash**: string representation of a geographic cell.
+- **Quadtree**: hierarchical spatial index that recursively splits regions.
+- **Bounding box**: rectangular candidate region around a search area.
+- **k-nearest neighbors**: the `k` closest entities to a point.
+
+---
+
+## Example Walkthrough
+### Example: Finding Nearby Restaurants
+1. User sends current latitude and longitude.
+2. The system converts the location into one or more geospatial cells.
+3. Candidate businesses are fetched from those cells and neighboring boundary cells.
+4. Exact distance is computed for candidates.
+5. Results are sorted by distance or relevance and returned.
+
+## Exercises
+1. Why do boundary cells matter in location search?
+2. Why is candidate filtering usually done before exact distance ranking?
+3. When is geohash easier to operate than quadtree?
+
+---
+
+## One-Minute Revision
+- location search needs spatial indexing
+- candidate generation should be cheap
+- exact ranking can happen after filtering
+- boundary handling is essential
+- precision trade-offs affect cost and accuracy
+
+## Exercise Answers
+1. A nearby result may sit just across a cell boundary, so ignoring neighboring cells can miss correct answers.
+2. Exact geometric calculations are more expensive, so systems first narrow the candidate set using cheap index-based filtering.
+3. Geohash is often easier when you want a simple string-based spatial partitioning approach with straightforward operational behavior.

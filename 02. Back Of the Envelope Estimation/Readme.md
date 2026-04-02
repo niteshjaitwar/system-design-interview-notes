@@ -96,3 +96,75 @@ Avoid ambiguity by labeling units (e.g., `5 MB` instead of `5`).
 - **Cache Requirements:** Evaluate memory requirements for caching.
 - **Number of Servers:** Calculate hardware needs based on workload.
 
+---
+
+## Beginner Notes
+Back-of-the-envelope estimation is not about exact math. It is about proving that your design thinking is grounded in scale.
+
+### Core Quantities
+- **QPS**: queries per second.
+- **DAU**: daily active users.
+- **Bandwidth**: data moved per second.
+- **Memory footprint**: RAM needed for hot data.
+
+## Advanced Design Questions
+- What is peak traffic, not just average traffic?
+- What is the fan-out multiplier?
+- What is the storage growth over one year?
+- Which component becomes the first bottleneck: CPU, RAM, network, or disk?
+
+## Common Mistakes
+- Forgetting unit conversions.
+- Using only average load and ignoring peak load.
+- Ignoring replication factor in storage estimates.
+- Ignoring metadata size and index size.
+
+---
+
+## Interview Questions
+1. Estimate storage for 10 million users uploading 2 photos per day.
+2. Estimate peak QPS for a product with 50 million DAU.
+3. Estimate cache size for the hottest 20% of content.
+4. Estimate outbound bandwidth for a short-video product.
+5. Estimate number of servers required for a chat service.
+
+## Quick Estimation Checklist
+- write down assumptions
+- use powers of two or round numbers
+- separate average load from peak load
+- include replication overhead
+- include growth over time
+
+---
+
+## Example Walkthrough
+### Example: Estimating Image Storage
+Assume:
+- 5 million daily active users
+- 2 image uploads per day per active user
+- average image size = 2 MB
+- 3x replication
+
+Daily storage written:
+`5,000,000 x 2 x 2 MB = 20,000,000 MB = 20 TB/day`
+
+With replication:
+`20 TB/day x 3 = 60 TB/day`
+
+## Exercises
+1. Estimate peak QPS if average QPS is 5,000 and peak is 4x average.
+2. Estimate yearly storage for 1 TB/day raw writes with 3x replication.
+3. Why should estimation include index and metadata overhead?
+
+---
+
+## One-Minute Revision
+- Always write down assumptions.
+- Distinguish average load from peak load.
+- Include replication, metadata, and index overhead.
+- Use rough numbers confidently.
+
+## Exercise Answers
+1. Peak QPS is `5,000 x 4 = 20,000`.
+2. Yearly replicated storage is `1 TB/day x 3 x 365 = 1,095 TB`.
+3. Real systems store more than raw payloads; indexes, metadata, and replicas materially change storage and cost.

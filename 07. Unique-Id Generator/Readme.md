@@ -98,3 +98,75 @@ This chapter addresses the challenge of designing a **unique ID generator** for 
 - ID generators are mission-critical and must be fault-tolerant.
 - Consider redundancy and failover mechanisms.
 
+---
+
+## Beginner Notes
+### Why ID Generation Is a System Design Problem
+An ID must often be:
+- unique
+- fast to generate
+- sortable or roughly time-ordered
+- available across many servers
+
+### Desirable ID Properties
+- uniqueness
+- scalability
+- low latency
+- small size
+- lexical or numeric sortability
+
+## Advanced Design Questions
+- Must IDs be globally ordered or just unique?
+- Can gaps exist?
+- Is predictability a security issue?
+- What happens if clocks move backward?
+
+## Common Mistakes
+- Confusing uniqueness with ordering.
+- Ignoring clock rollback in Snowflake-style designs.
+- Using UUID blindly when storage locality matters.
+
+---
+
+## Interview Questions
+1. Why can auto-increment IDs be problematic in distributed systems?
+2. When is UUID good enough, and when is it a poor choice?
+3. What are the main pieces of a Snowflake-like ID?
+4. How do you handle machine ID assignment safely?
+5. What should the system do if the clock moves backward?
+
+## Chapter Glossary
+- **UUID**: a large unique identifier usually generated without coordination.
+- **Ticket server**: central service handing out ID ranges or sequential IDs.
+- **Snowflake**: time-based distributed ID scheme with embedded machine bits.
+- **Clock drift**: difference between server clocks over time.
+
+---
+
+## Example Walkthrough
+### Example: Snowflake-Style ID Generation
+1. Take the current timestamp in milliseconds.
+2. Add a machine or worker identifier.
+3. Add a sequence number for IDs generated within the same millisecond.
+4. Combine the fields into one 64-bit integer.
+
+This gives uniqueness with rough time ordering if clocks behave correctly.
+
+## Exercises
+1. Why is global ordering harder than uniqueness?
+2. What breaks if two machines accidentally share the same worker ID?
+3. What should happen if the sequence overflows within one millisecond?
+
+---
+
+## One-Minute Revision
+- uniqueness is easier than ordering
+- UUID is easy but large and not time-friendly
+- ticket servers are simple but centralized
+- Snowflake balances uniqueness, speed, and rough ordering
+- clock behavior matters
+
+## Exercise Answers
+1. Uniqueness only requires avoiding collisions, but global ordering requires coordination across many machines and times.
+2. They may generate identical IDs for the same timestamp and sequence range, causing collisions.
+3. The generator must wait for the next millisecond or use another safe overflow strategy.

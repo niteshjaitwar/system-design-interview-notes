@@ -130,3 +130,81 @@ could cause more requests than allowed quota to go through.
 ### Monitoring
 - Regular analytics to ensure algorithm effectiveness and adjust rules as needed.
 
+---
+
+## Beginner Notes
+### What a Rate Limiter Actually Does
+A rate limiter answers this question for every request:
+
+**Should this request be allowed right now or rejected?**
+
+### Where Limits Can Be Applied
+- per user
+- per IP
+- per API key
+- per endpoint
+- per tenant
+
+## Advanced Design Questions
+- Do limits need to be globally correct across regions?
+- Is eventual consistency acceptable?
+- What happens if Redis becomes unavailable?
+- Do you fail open or fail closed?
+
+### Fail Open vs Fail Closed
+- **Fail open**: allow traffic if limiter is broken.
+- **Fail closed**: reject traffic if limiter is broken.
+
+## Common Mistakes
+- Using fixed windows without acknowledging edge bursts.
+- Forgetting clock skew in distributed systems.
+- Not defining the rate-limit key correctly.
+
+---
+
+## Interview Questions
+1. Which algorithm would you choose for API rate limiting and why?
+2. How do you implement rate limiting in Redis safely?
+3. How do per-user and per-IP limits interact?
+4. What happens when the limiter datastore fails?
+5. How do you support different plans with different quotas?
+
+## Chapter Glossary
+- **Burst**: a short spike of requests.
+- **Quota**: allowed amount of traffic in a period.
+- **Throttle**: slow down or reject requests beyond the allowed rate.
+- **Fail open**: allow traffic when the limiter is unavailable.
+- **Fail closed**: reject traffic when the limiter is unavailable.
+
+---
+
+## Example Walkthrough
+### Example: Per-User API Limit
+Requirement:
+- allow 100 requests per minute per user
+
+Possible implementation:
+1. Build a rate-limit key like `user_id + endpoint`.
+2. Store request counters in Redis.
+3. Use a sliding-window or token-bucket algorithm.
+4. If limit is exceeded, return `429 Too Many Requests`.
+5. Include retry metadata in headers if needed.
+
+## Exercises
+1. Why is token bucket often preferred for bursty traffic?
+2. What is the weakness of fixed windows?
+3. What should happen if the limiter store becomes unavailable?
+
+---
+
+## One-Minute Revision
+- rate limiter decides allow or reject
+- choose a key such as user, IP, or API key
+- token bucket handles bursts well
+- fixed windows are simple but inaccurate at boundaries
+- decide fail open or fail closed deliberately
+
+## Exercise Answers
+1. Token bucket allows short bursts while still enforcing a long-term average rate.
+2. Fixed windows allow edge bursts where a client can send many requests around a boundary and exceed the intended effective rate.
+3. It depends on policy: fail open for higher availability or fail closed for stronger protection and cost control.

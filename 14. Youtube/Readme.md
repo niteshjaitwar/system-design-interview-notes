@@ -223,3 +223,75 @@ contains 3 queues and a task scheduler.
 ### Non-Recoverable Errors
 - Stop malformed video processing and return error codes.
 
+---
+
+## Beginner Notes
+### YouTube Is Not One Service
+It is several systems working together:
+- upload service
+- metadata service
+- transcoding pipeline
+- object storage
+- CDN delivery
+
+### Key Video Terms
+- **codec**: compression format
+- **container**: file wrapper like MP4
+- **bitrate**: bits used per second of video
+- **resolution**: frame size such as 720p or 1080p
+
+## Advanced Design Questions
+- Do you transcode eagerly for all formats or lazily for demand?
+- How do you support adaptive bitrate streaming?
+- How do you isolate failures in long transcoding workflows?
+- How do you secure uploads and signed URLs?
+
+## Common Mistakes
+- Treating video upload as a single synchronous request.
+- Ignoring storage tiers and CDN cost.
+- Ignoring metadata consistency between processing stages.
+
+---
+
+## Interview Questions
+1. Why should uploads and transcoding be decoupled?
+2. What is adaptive bitrate streaming and why is it important?
+3. How do you process very large files safely and resumably?
+4. How do you design for both popular videos and long-tail videos?
+5. Where do signed URLs fit into the upload flow?
+
+## Chapter Glossary
+- **Transcoding**: converting video into multiple formats or qualities.
+- **Chunked upload**: uploading large files in smaller pieces.
+- **Manifest**: file describing the available video segments and qualities.
+- **Signed URL**: time-limited URL granting secure access to storage.
+
+---
+
+## Example Walkthrough
+### Example: Video Upload and Processing
+1. Client requests upload permission.
+2. The backend returns a signed upload URL.
+3. Client uploads the raw video to object storage.
+4. A processing event triggers the transcoding pipeline.
+5. The pipeline generates multiple resolutions and formats.
+6. Metadata and manifest files are updated so playback can begin.
+
+## Exercises
+1. Why is asynchronous transcoding better than synchronous upload processing?
+2. What role does a CDN play after transcoding is complete?
+3. Why is adaptive bitrate streaming important for user experience?
+
+---
+
+## One-Minute Revision
+- upload, storage, transcoding, and delivery are separate systems
+- video processing is asynchronous
+- object storage keeps raw and processed media
+- CDN handles global playback efficiently
+- manifests enable adaptive streaming
+
+## Exercise Answers
+1. Transcoding is expensive and slow, so doing it asynchronously prevents uploads from blocking on long processing work.
+2. CDN serves processed video close to users, reducing origin load and playback latency.
+3. It lets clients switch quality based on current network conditions, reducing buffering and improving playback continuity.

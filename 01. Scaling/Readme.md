@@ -237,3 +237,90 @@ communication. It serves as a buffer and distributes asynchronous requests.
 
 This chapter provides a solid foundation for building scalable systems that can handle millions of users.
 
+---
+
+## Beginner Notes
+### Terms You Should Know
+- **Latency**: time taken to serve one request.
+- **Throughput**: total work handled per second.
+- **Redundancy**: extra copies or extra servers added so one failure does not stop the system.
+- **Bottleneck**: the slowest or most overloaded part of the system.
+- **Stateless server**: a server that does not keep important user state only in its own memory.
+
+### Why Scaling Happens in Stages
+Most systems evolve like this:
+1. single server
+2. separate database
+3. multiple app servers behind a load balancer
+4. cache and CDN
+5. replicas
+6. queues
+7. sharding and multi-region deployment
+
+## Advanced Trade-Offs
+### Read Scalability vs Write Complexity
+Caching, replicas, and CDNs improve reads, but writes become harder because data must be invalidated, replicated, or synchronized.
+
+### Multi-Region Complexity
+Multi-data-center design improves availability and latency, but creates harder problems:
+- replication lag
+- conflict resolution
+- failover orchestration
+- deployment consistency
+
+## Common Mistakes
+- Adding replicas without discussing replication lag.
+- Adding cache without cache invalidation strategy.
+- Saying “just use sharding” without choosing a shard key.
+- Making the web tier stateful and then expecting easy horizontal scaling.
+
+---
+
+## Interview Questions
+1. When should a startup move from a monolith on one server to multiple services?
+2. How do you decide whether cache is worth adding?
+3. Why is the web tier usually made stateless first?
+4. What breaks when traffic becomes global?
+5. How do you detect the first real bottleneck in a scaling journey?
+
+## Chapter Glossary
+- **Load balancer**: distributes requests across many backend instances.
+- **Replica**: a copied database node used for redundancy or reads.
+- **CDN**: edge cache for static or globally served content.
+- **Shard**: one partition of a horizontally scaled database.
+- **Queue**: buffer that decouples producers and consumers.
+
+---
+
+## Example Walkthrough
+### Example: Scaling a Growing Product
+1. Start with one application server and one database.
+2. Move the database to a separate server once application and data workloads compete.
+3. Add multiple stateless application servers behind a load balancer.
+4. Add cache to reduce repeated database reads.
+5. Add database replicas for read-heavy traffic.
+6. Add a CDN for static assets and global users.
+7. Introduce queues for heavy background work such as emails and media processing.
+8. Shard the database only when single-node scaling is no longer enough.
+
+## Exercises
+1. Why is cache usually introduced before sharding?
+2. What user-visible problem can replication lag cause?
+3. Why does statelessness help autoscaling?
+4. Name two reasons multi-region deployment is harder than single-region deployment.
+
+---
+
+## One-Minute Revision
+- Scale in stages.
+- Keep app servers stateless.
+- Add cache before expensive database redesign.
+- Use replicas for read scale and availability.
+- Use queues for asynchronous heavy work.
+- Shard only when single-node limits are reached.
+
+## Exercise Answers
+1. Cache is usually simpler and cheaper than sharding, and it removes a large amount of read pressure quickly.
+2. A user may write data and then immediately read stale data from a lagging replica.
+3. Any stateless instance can serve any request, which makes adding and removing instances easier.
+4. Multi-region adds replication lag, failover complexity, deployment coordination, and cross-region consistency issues.

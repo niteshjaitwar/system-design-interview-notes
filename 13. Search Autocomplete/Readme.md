@@ -180,3 +180,67 @@ In the high-level design, whenever a user types a search query, data is updated 
 ### Trending Queries
 - Handle real-time events by dynamically updating trie nodes or weighting recent queries more heavily.
 
+---
+
+## Beginner Notes
+### What Autocomplete Optimizes For
+- low latency
+- relevant suggestions
+- high cache hit rate
+- frequent updates to hot queries
+
+### Why a Trie Is Popular
+A trie groups strings by prefix, making prefix lookups efficient.
+
+## Advanced Design Questions
+- Do updates need to be real-time or batch-based?
+- How do you handle multilingual tokenization?
+- How do you support typo tolerance?
+- Should popular prefixes be precomputed and cached?
+
+## Common Mistakes
+- Treating autocomplete as full-text search.
+- Ignoring ranking freshness.
+- Ignoring memory growth of trie-based indexes.
+
+---
+
+## Interview Questions
+1. Why is a trie better than a relational table scan for prefix suggestions?
+2. How do you keep suggestions fresh without rebuilding everything continuously?
+3. How do you rank by frequency and recency together?
+4. How do you support typo tolerance or fuzzy matching?
+5. What parts should be cached aggressively?
+
+## Chapter Glossary
+- **Prefix**: the starting sequence of characters in a query.
+- **Trie**: tree-like structure optimized for prefix operations.
+- **Top-k**: the highest-ranked `k` suggestions for a prefix.
+- **Fuzzy match**: approximate match that tolerates spelling mistakes.
+
+---
+
+## Example Walkthrough
+### Example: Returning Suggestions for `ca`
+1. User types `c`, then `ca`.
+2. The service finds the trie node for prefix `ca`.
+3. It returns the top-ranked suggestions stored under that node, such as `car`, `cat`, and `camera`.
+4. Results may be filtered by locale, freshness, or personalization.
+
+## Exercises
+1. Why does storing top-k suggestions at trie nodes reduce latency?
+2. Why are batch updates often simpler than real-time index mutation?
+3. What is the difference between autocomplete and full-text search?
+
+---
+
+## One-Minute Revision
+- autocomplete is prefix-based and latency-sensitive
+- trie is the core structure
+- ranking needs freshness and popularity
+- top-k caching avoids deep traversal on every keystroke
+
+## Exercise Answers
+1. The service can return results directly from the prefix node without scanning the whole subtree at query time.
+2. Batch updates are easier to reason about, cheaper operationally, and avoid high write churn on hot prefixes.
+3. Autocomplete predicts likely next queries from prefixes, while full-text search finds matching documents across full content.

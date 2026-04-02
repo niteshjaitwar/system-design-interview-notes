@@ -259,4 +259,76 @@ value).
 - Data is replicated at multiple nodes.
 - There is no single point of failure as every node has the same set of responsibilities.
 
+---
 
+## Beginner Notes
+### What Makes a Key-Value Store Different
+You do not query with joins or complex relational predicates. You typically access data by key.
+
+Example:
+- `get(user:123)`
+- `put(session:abc, data)`
+
+### Storage Engine Terms
+- **Commit log**: append-only record of writes for durability.
+- **Memtable / memory cache**: in-memory structure holding recent writes.
+- **SSTable**: immutable sorted file on disk.
+- **Bloom filter**: fast probabilistic structure that tells you where data is definitely not.
+
+## Advanced Design Questions
+- Do you prefer AP or CP behavior for the product requirement?
+- How are tombstones and deletes handled?
+- When do compaction and repair run?
+- How do you guarantee read-your-writes for a user?
+
+## Common Mistakes
+- Quoting CAP without connecting it to product requirements.
+- Saying “eventual consistency” without discussing user-visible effects.
+- Ignoring replica repair and compaction cost.
+- Ignoring hot keys and skewed traffic.
+
+---
+
+## Interview Questions
+1. When would you prefer a key-value store over a relational database?
+2. What is the meaning of `N`, `R`, and `W` in quorum systems?
+3. How do vector clocks help with conflict detection?
+4. Why are Merkle trees useful for anti-entropy repair?
+5. What user-visible problems can replication lag cause?
+
+## Chapter Glossary
+- **Quorum**: minimum number of replicas needed for a read or write decision.
+- **Hinted handoff**: temporarily storing writes on healthy nodes while another node is down.
+- **Vector clock**: version metadata used to reason about concurrent writes.
+- **Merkle tree**: hash tree used to detect replica differences efficiently.
+- **Compaction**: background merge process that reduces stale data and read amplification.
+
+---
+
+## Example Walkthrough
+### Example: Writing a Key in a Distributed Store
+1. The client sends `put(key, value)` to a coordinator node.
+2. The coordinator finds the responsible replicas using consistent hashing.
+3. The write is sent to `N` replicas.
+4. The request succeeds once `W` replicas acknowledge it.
+5. Lagging replicas can be repaired later if the design is eventually consistent.
+
+## Exercises
+1. What happens if `W = 1` and one replica is stale?
+2. Why is a Bloom filter useful on the read path?
+3. How do vector clocks help when two clients update the same key concurrently?
+
+---
+
+## One-Minute Revision
+- key-value stores optimize key-based access
+- consistent hashing partitions data
+- replication improves availability
+- quorum tunes consistency vs latency
+- vector clocks help detect concurrent conflicts
+- Merkle trees help repair replica divergence
+
+## Exercise Answers
+1. A write may complete quickly, but later reads can still hit stale replicas depending on `R` and replica lag.
+2. A Bloom filter helps avoid unnecessary disk reads by telling the system where data is definitely not present.
+3. Vector clocks show whether one version happened before another or whether both are concurrent conflicting versions.

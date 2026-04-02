@@ -41,7 +41,7 @@ This chapter introduces a **4-step framework** for navigating system design inte
 
 ### Approach
 - **Draft a Blueprint:**
-  - Use box diagrams for key components (e.g., clients, APIs, databases, caches, CDNs).
+  - Use box diagrams for key components such as clients, APIs, databases, caches, and CDNs.
   - Treat the interviewer as a teammate to refine the design.
 
 - **Perform Back-of-the-Envelope Calculations:**
@@ -98,18 +98,94 @@ For a news feed system, divide the design into:
 - **Show Flexibility:** Suggest alternative approaches and refine your design.
 - **Focus on Critical Components:** Prioritize key parts of the system.
 
-### Don’ts
-- **Avoid Premature Solutions:** Don’t design before understanding the requirements.
-- **Don’t Go Silent:** Communicate regularly during the process.
+### Don'ts
+- **Avoid Premature Solutions:** Do not design before understanding the requirements.
+- **Don't Go Silent:** Communicate regularly during the process.
 - **Avoid Over-Engineering:** Focus on practical, scalable solutions.
 
 ---
 
 ## Time Management
 
-### Suggested Time Allocation (for 45-Minute Interviews):
-1. **Understand Problem and Scope:** 3–10 minutes
-2. **High-Level Design and Buy-In:** 10–15 minutes
-3. **Deep Dive:** 10–25 minutes
-4. **Wrap-Up:** 3–5 minutes
+### Suggested Time Allocation (for 45-Minute Interviews)
+1. **Understand Problem and Scope:** 3-10 minutes
+2. **High-Level Design and Get Buy-In:** 10-15 minutes
+3. **Deep Dive:** 10-25 minutes
+4. **Wrap-Up:** 3-5 minutes
 
+---
+
+## Beginner Notes
+The framework exists to stop candidates from making two common mistakes:
+- designing too early
+- discussing details before proving the top-level architecture works
+
+### Mental Order
+1. clarify requirements
+2. estimate scale
+3. draw the main components
+4. identify the hardest parts
+5. deep dive only where it matters
+6. summarize trade-offs and future improvements
+
+## Advanced Interview Signals
+Interviewers are usually checking whether you can:
+- reduce ambiguity
+- choose reasonable defaults
+- explain trade-offs clearly
+- recognize bottlenecks
+- communicate like an engineer working with peers
+
+## Common Mistakes
+- Spending too long on requirement gathering.
+- Naming technologies too early instead of discussing roles.
+- Deep-diving into every component instead of the risky ones.
+- Ending without discussing bottlenecks and future scale limits.
+
+---
+
+## Interview Questions
+1. What questions should you ask before designing a chat system?
+2. How do you choose which component to deep dive into?
+3. When should you discuss trade-offs instead of implementation details?
+4. How do you recover if your first design idea is weak?
+5. What should be included in the wrap-up?
+
+## Reusable Interview Template
+Use this structure in most interviews:
+1. clarify scope
+2. estimate scale
+3. propose high-level architecture
+4. trace one write path and one read path
+5. deep dive into the hardest parts
+6. discuss bottlenecks, trade-offs, and future scale
+
+---
+
+## Example Walkthrough
+### Example: Applying the Framework to “Design a URL Shortener”
+1. Clarify whether analytics, custom aliases, and expiration are required.
+2. Estimate read traffic versus write traffic.
+3. Propose components such as API servers, cache, database, and redirect service.
+4. Walk through the shortening flow and the redirection flow.
+5. Deep dive into short-code generation and cache strategy.
+6. Close with abuse prevention, hot key handling, and analytics storage.
+
+## Exercises
+1. Why is requirement clarification the first step instead of diagramming?
+2. When should you spend more time on deep dive than on high-level design?
+3. Why should you always discuss bottlenecks near the end?
+
+---
+
+## One-Minute Revision
+- clarify first
+- estimate second
+- draw high-level design
+- deep dive into the hardest parts
+- end with trade-offs and bottlenecks
+
+## Exercise Answers
+1. Clarification prevents solving the wrong problem and gives the constraints needed for architecture decisions.
+2. Spend more time on deep dive when the main architecture is straightforward but one or two components are technically risky.
+3. Bottlenecks show that you understand how the system behaves under stress and how it would evolve further.

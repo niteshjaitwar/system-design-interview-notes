@@ -150,3 +150,72 @@ A good web crawler must address:
 - **Horizontal Scaling:** Use stateless servers to scale crawl jobs efficiently.
 - **Analytics:** Collect and analyze data for insights.
 
+---
+
+## Beginner Notes
+### What a Crawler Does
+A crawler discovers pages, downloads them, extracts links, and repeats the process.
+
+### Basic Pipeline
+1. pick next URL
+2. download page
+3. parse content
+4. extract links
+5. deduplicate
+6. enqueue discovered URLs
+
+## Advanced Design Questions
+- How do you prioritize fresh pages over low-value pages?
+- How do you schedule recrawls?
+- How do you canonicalize URLs?
+- How do you respect robots.txt and politeness delays?
+
+## Common Mistakes
+- Treating crawling as only parallel downloading.
+- Ignoring deduplication and canonicalization.
+- Ignoring politeness and legal constraints.
+
+---
+
+## Interview Questions
+1. How do you stop the crawler from visiting the same page repeatedly?
+2. How should the frontier prioritize URLs?
+3. How do you respect crawl-delay and robots.txt at scale?
+4. How do you crawl JavaScript-heavy pages?
+5. How do you detect duplicate content efficiently?
+
+## Chapter Glossary
+- **Frontier**: prioritized set of URLs waiting to be crawled.
+- **Canonicalization**: normalizing different URLs that point to the same content.
+- **Politeness**: limiting crawl behavior so target sites are not overloaded.
+- **Recrawl**: visiting known pages again to refresh content.
+
+---
+
+## Example Walkthrough
+### Example: Crawling One Page
+1. Pop a URL from the frontier.
+2. Check deduplication tables to avoid recrawling too early.
+3. Download the page.
+4. Parse HTML and extract outgoing links.
+5. Canonicalize and filter those links.
+6. Push allowed links back into the frontier with priority metadata.
+
+## Exercises
+1. Why is BFS-like crawling often preferred over deep DFS-like crawling on the web?
+2. What is the purpose of canonicalization?
+3. Why should the crawler rate-limit requests per host?
+
+---
+
+## One-Minute Revision
+- crawler = discover, download, parse, enqueue
+- frontier controls ordering
+- deduplication avoids waste
+- politeness avoids harming sites
+- recrawl keeps data fresh
+
+## Exercise Answers
+1. BFS-like crawling spreads coverage more evenly across sites instead of going too deep into one branch early.
+2. Canonicalization reduces duplicate crawling by normalizing different URLs that represent the same content.
+3. Per-host limiting prevents overloading target websites and helps respect politeness rules.

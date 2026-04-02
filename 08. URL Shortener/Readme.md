@@ -141,3 +141,70 @@ Convert ID `2009215674938` to Base 62:
 ### High Availability and Reliability
 - Ensure consistent and reliable services using database replication and fault-tolerant design.
 
+---
+
+## Beginner Notes
+### Core Idea
+A URL shortener stores a mapping like:
+- short code -> long URL
+
+When a user opens the short URL, the service looks up the original URL and redirects the browser.
+
+### Redirect Types
+- `301` permanent redirect
+- `302` temporary redirect
+
+## Advanced Design Questions
+- How do you avoid collisions in short code generation?
+- How do you prevent malicious URLs and spam?
+- Should redirects be heavily cached at edge or CDN?
+- What happens when one link becomes extremely hot?
+
+## Common Mistakes
+- Ignoring the difference between write traffic and much larger redirect traffic.
+- Using a random hash without collision strategy.
+- Forgetting analytics, abuse control, and spam prevention.
+
+---
+
+## Interview Questions
+1. Would you choose random IDs or base62-encoded counters for short URLs?
+2. How do you detect and handle collisions?
+3. Why might `302` be safer than `301` for some products?
+4. How do you make redirects low-latency globally?
+5. How do you prevent the service from becoming a phishing tool?
+
+## Chapter Glossary
+- **Base62**: encoding using digits plus upper and lower case letters.
+- **Collision**: two long URLs or generated IDs producing the same short code.
+- **Redirect**: HTTP response telling the browser to load another URL.
+- **Alias**: custom user-chosen short code.
+
+---
+
+## Example Walkthrough
+### Example: Redirecting a Short URL
+1. User opens `short.ly/abc123`.
+2. The browser sends an HTTP request to the shortener service.
+3. The service checks cache for `abc123`.
+4. If not cached, it loads the long URL from the database.
+5. The service returns an HTTP redirect response with the original URL.
+
+## Exercises
+1. Why can redirect traffic be much larger than create-short-url traffic?
+2. When is a custom alias harder to support than generated aliases?
+3. Why might caching popular short codes at the edge help a lot?
+
+---
+
+## One-Minute Revision
+- store short code to long URL mapping
+- redirect path is read-heavy
+- collision handling matters
+- abuse prevention matters
+- hot links benefit heavily from caching
+
+## Exercise Answers
+1. One short link can be clicked millions of times while being created only once.
+2. Custom aliases require uniqueness checks, reserved-word rules, moderation, and better abuse protection.
+3. Popular links get repeated reads, so edge caching reduces latency and origin load dramatically.
